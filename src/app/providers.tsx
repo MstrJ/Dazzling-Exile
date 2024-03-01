@@ -18,7 +18,7 @@ export function Providers({ children, themeProps, session }: ProvidersProps) {
   const router = useRouter();
 
   return (
-    <SessionProvider session={session}>
+    <SessionProvider session={session} refetchInterval={5 * 60}>
       <NextUIProvider navigate={router.push}>
         <NextThemesProvider {...themeProps}>{children}</NextThemesProvider>
       </NextUIProvider>
