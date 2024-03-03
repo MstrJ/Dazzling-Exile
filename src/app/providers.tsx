@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { ThemeProviderProps } from "next-themes/dist/types";
 import { Session } from "next-auth";
-import { SessionProvider } from "next-auth/react";
+import { SessionProvider, signIn } from "next-auth/react";
 
 export interface ProvidersProps {
   children: React.ReactNode;
@@ -17,8 +17,19 @@ export interface ProvidersProps {
 export function Providers({ children, themeProps, session }: ProvidersProps) {
   const router = useRouter();
 
+  React.useEffect(() => {
+    if (session?.error) {
+      signIn("poe");
+    }
+  }, [session]);
+
   return (
-    <SessionProvider session={session} refetchInterval={5 * 60}>
+    <SessionProvider
+      session={session}
+      refetchInterval={5 * 60}
+      refetchOnWindowFocus={false}
+      refetchWhenOffline={false}
+    >
       <NextUIProvider navigate={router.push}>
         <NextThemesProvider {...themeProps}>{children}</NextThemesProvider>
       </NextUIProvider>

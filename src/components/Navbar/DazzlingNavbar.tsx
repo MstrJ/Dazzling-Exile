@@ -1,5 +1,4 @@
 "use client";
-import { Button } from "@nextui-org/button";
 import {
   Navbar,
   NavbarBrand,
@@ -11,8 +10,14 @@ import {
 } from "@nextui-org/navbar";
 import Link from "next/link";
 import React from "react";
-import { LoginBtn, LogoutBtn } from "../Button/buttons";
+import { useSession } from "next-auth/react";
+import { BtnLogin, BtnLogout } from "../buttons";
+import Brand from "../brand";
 const DazzlingNavbar = () => {
+  const { data: session, status, update } = useSession();
+
+  if (status !== "authenticated") return <></>;
+
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   const menuItems = ["Profile", "Dashboard", "Login"];
@@ -32,13 +37,13 @@ const DazzlingNavbar = () => {
 
       <NavbarContent className="sm:hidden pr-3" justify="center">
         <NavbarBrand>
-          <p className="font-bold text-inherit">Dazzling Exile</p>
+          <Brand setup="navbar" />
         </NavbarBrand>
       </NavbarContent>
 
       <NavbarContent className="hidden sm:flex gap-4 " justify="center">
         <NavbarBrand>
-          <p className="font-bold text-inherit">Dazzling Exile</p>
+          <Brand setup="navbar" />
         </NavbarBrand>
         <NavbarItem isActive>
           <Link href="/" aria-current="page">
@@ -54,10 +59,7 @@ const DazzlingNavbar = () => {
 
       <NavbarContent justify="end">
         <NavbarItem className="hidden sm:flex">
-          <LogoutBtn />
-        </NavbarItem>
-        <NavbarItem className="hidden sm:flex">
-          <LoginBtn />
+          <BtnLogout />
         </NavbarItem>
       </NavbarContent>
 

@@ -3,7 +3,8 @@ import { Metadata } from "next";
 import { Providers } from "./providers";
 import { getServerSession } from "next-auth";
 import { options } from "./api/auth/[...nextauth]/options";
-import DazzlingNavbar from "../components/Navbar/DazzlingNavbar";
+import Footer from "../components/footer";
+import DazzlingNavbar from "../components/Navbar/dazzlingNavbar";
 
 export const metadata: Metadata = {
   title: "Dazzling Exile",
@@ -28,6 +29,7 @@ export default async function RootLayout({
         >
           <DazzlingNavbar />
           {children}
+          <Footer />
         </Providers>
       </body>
     </html>

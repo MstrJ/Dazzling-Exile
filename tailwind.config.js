@@ -1,5 +1,7 @@
 import { nextui } from "@nextui-org/theme";
-
+const {
+  default: flattenColorPalette,
+} = require("tailwindcss/lib/util/flattenColorPalette");
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -10,42 +12,40 @@ module.exports = {
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      height: {
+        true: "calc(100vh - 65px)", // 65px is the height of the navbar
+        about: "calc(100vh - 162px)", // 80px is the height of the footer
+      },
+      fontFamily: {
+        ubuntu: ["Ubuntu", "sans-serif"],
+      },
+    },
   },
   darkMode: "class",
   plugins: [
+    addVariablesForColors,
     nextui({
       themes: {
         dark: {
           extend: "dark",
           colors: {
-            background: "#111217",
+            background: "#000000",
             foreground: "#ffffff",
-            primary: {
-              100: "#FEF4CC",
-              200: "#FEE699",
-              300: "#FDD466",
-              400: "#FBC240",
-              500: "#F9A602",
-              600: "#D68701",
-              700: "#B36B01",
-              800: "#905100",
-              900: "#773F00",
-              DEFAULT: "#F9A602",
+            secondary: {
+              100: "#EFCCFF",
+              200: "#DB99FF",
+              300: "#C166FF",
+              400: "#A83FFF",
+              500: "#7F00FF",
+              600: "#6200DB",
+              700: "#4900B7",
+              800: "#330093",
+              900: "#24007A",
+              DEFAULT: "#7F00FF",
               foreground: "#ffffff",
             },
-            success: {
-              100: "#DEFDD9",
-              200: "#B7FCB3",
-              300: "#8CF890",
-              400: "#6EF180",
-              500: "#40E867",
-              600: "#2EC760",
-              700: "#20A759",
-              800: "#14864F",
-              900: "#0C6F49",
-            },
-            secondary: {
+            primary: {
               100: "#CCFEFC",
               200: "#9AFCFE",
               300: "#68F0FE",
@@ -55,6 +55,19 @@ module.exports = {
               700: "#0271B5",
               800: "#015192",
               900: "#003A78",
+              DEFAULT: "#05C2FC",
+              foreground: "#ffffff",
+            },
+            success: {
+              100: "#DEFDE3",
+              200: "#BEFBCE",
+              300: "#9BF5BC",
+              400: "#7FEBB2",
+              500: "#56DEA4",
+              600: "#3EBE95",
+              700: "#2B9F85",
+              800: "#1B8073",
+              900: "#106A68",
             },
             warning: {
               100: "#FFFCD5",
@@ -98,18 +111,31 @@ module.exports = {
           extend: "light",
           colors: {
             background: "#f1f5f9",
-            foreground: "#ffffff",
+            foreground: "#000000",
+            secondary: {
+              100: "#EFCCFF",
+              200: "#DB99FF",
+              300: "#C166FF",
+              400: "#A83FFF",
+              500: "#7F00FF",
+              600: "#6200DB",
+              700: "#4900B7",
+              800: "#330093",
+              900: "#24007A",
+              DEFAULT: "#7F00FF",
+              foreground: "#ffffff",
+            },
             primary: {
-              100: "#FEF4CC",
-              200: "#FEE699",
-              300: "#FDD466",
-              400: "#FBC240",
-              500: "#F9A602",
-              600: "#D68701",
-              700: "#B36B01",
-              800: "#905100",
-              900: "#773F00",
-              DEFAULT: "#F9A602",
+              100: "#CCFEFC",
+              200: "#9AFCFE",
+              300: "#68F0FE",
+              400: "#43DEFD",
+              500: "#05C2FC",
+              600: "#0397D8",
+              700: "#0271B5",
+              800: "#015192",
+              900: "#003A78",
+              DEFAULT: "#05C2FC",
               foreground: "#ffffff",
             },
             success: {
@@ -122,17 +148,6 @@ module.exports = {
               700: "#20A759",
               800: "#14864F",
               900: "#0C6F49",
-            },
-            secondary: {
-              100: "#CCFEFC",
-              200: "#9AFCFE",
-              300: "#68F0FE",
-              400: "#43DEFD",
-              500: "#05C2FC",
-              600: "#0397D8",
-              700: "#0271B5",
-              800: "#015192",
-              900: "#003A78",
             },
             warning: {
               100: "#FFFCD5",
@@ -176,3 +191,13 @@ module.exports = {
     }),
   ],
 };
+function addVariablesForColors({ addBase, theme }) {
+  let allColors = flattenColorPalette(theme("colors"));
+  let newVars = Object.fromEntries(
+    Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
+  );
+
+  addBase({
+    ":root": newVars,
+  });
+}

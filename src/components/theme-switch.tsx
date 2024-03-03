@@ -8,6 +8,7 @@ import { useIsSSR } from "@react-aria/ssr";
 import clsx from "clsx";
 
 import { SunFilledIcon, MoonFilledIcon } from "@/src/components/icons";
+import { MagicBlock } from "./blocks";
 
 export interface ThemeSwitchProps {
   className?: string;
@@ -73,9 +74,23 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({
         })}
       >
         {!isSelected || isSSR ? (
-          <SunFilledIcon size={22} />
+          <MagicBlock
+            content={
+              <div className="fr gap-2">
+                Dark Mode
+                <SunFilledIcon className="mt-1" size={22} />
+              </div>
+            }
+          />
         ) : (
-          <MoonFilledIcon size={22} />
+          <MagicBlock
+            content={
+              <div className="fr gap-2">
+                Light Mode
+                <MoonFilledIcon size={24} />
+              </div>
+            }
+          />
         )}
       </div>
     </Component>
