@@ -1,0 +1,27 @@
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply font-ubuntu;
+}
+
+.fc {
+  @apply flex flex-col;
+}
+.fr {
+  @apply flex flex-row;
+}
+.bg-gradient {
+  @apply bg-[conic-gradient(from_90deg_at_50%_50%,#05C2FC_0%,#68F0FE_25%,#C166FF_50%,#7F00FF_65%,#05C2FC_100%)];
+}
+.text-gradient {
+  @apply text-transparent  bg-clip-text  bg-gradient-to-r from-primary-400 to-secondary-300;
+}
+.size-true {
+  @apply w-screen h-true;
+}
+.size-screen {
+  @apply w-screen h-screen;
+}
